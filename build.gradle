@@ -1,6 +1,15 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath ("org.junit.platform:junit-platform-gradle-plugin:1.0.0-M4")
+    }
+}
+
 apply plugin: 'java'
 apply plugin: 'idea'
-apply plugin: 'eclipse'
+apply plugin: 'org.junit.platform.gradle.plugin'
 
 repositories {
     jcenter()
@@ -8,6 +17,14 @@ repositories {
 
 dependencies {
     testCompile 'org.assertj:assertj-core:3.9.0'
-    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.1.0'
     testCompile group: 'org.mockito', name: 'mockito-core', version: '2.15.0'
+
+    testCompile("org.junit.jupiter:junit-jupiter-api:5.0.0-M4") //提供junit5的api
+    testRuntime("org.junit.jupiter:junit-jupiter-engine:5.0.0-M4") //提供junit5 运行engine
+
+    testCompile("org.junit.platform:junit-platform-runner:1.0.0-M4") //提供了一个从命令行或者 Gradle 和 Maven 插件来启动的 控制台启动器
 }
+
+junitPlatform {
+    details 'tree'
+} //保证测试的显示可以类似于一棵树
